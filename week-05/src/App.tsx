@@ -13,6 +13,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import Airdrop from "./Airdrop";
 import ShowSolBalance from "./ShowSolBalance";
+import SendTokens from "./SendTokens";
 
 function App() {
   const network = WalletAdapterNetwork.Devnet;
@@ -30,6 +31,7 @@ function App() {
           <br />
           <Airdrop />
           <ShowSolBalance />
+          <SendTokens />
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
