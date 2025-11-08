@@ -83,4 +83,25 @@ contract TestEverestCoin is Test {
             5
         );
     }
+
+    function test_RevertWhen_ApprovalLimitExceeded() public {
+        c.mint(address(this), 100);
+        c.approve(0x755e40da9a23FE489c59628fa110219359951186, 10);
+
+        vm.prank(0x755e40da9a23FE489c59628fa110219359951186);
+
+        vm.expectRevert(); // Expect revert before the failing call
+        c.transferFrom(
+            address(this),
+            0x755e40da9a23FE489c59628fa110219359951186,
+            20
+        );
+    }
+
+    function test_RevertWhen_TransferExceedsBalance() public {
+        c.mint(address(this), 20);
+
+        vm.expectRevert(); // Tells Foundry that the next call should revert
+        c.transfer(0x755e40da9a23FE489c59628fa110219359951186, 100);
+    }
 }
