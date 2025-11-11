@@ -10,6 +10,7 @@ import {
 import { config } from "./config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { Address } from "viem";
+import { AllowUSDT } from "./AllowUSDT";
 
 const client = new QueryClient();
 
@@ -20,6 +21,7 @@ function App() {
         <ConnectWallet />
         <TotalSupply />
         <TotalBalance />
+        <AllowUSDT />
       </QueryClientProvider>
     </WagmiProvider>
   );
