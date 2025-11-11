@@ -9,6 +9,7 @@ import {
 } from "wagmi";
 import { config } from "./config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { Address } from "viem";
 
 const client = new QueryClient();
 
@@ -18,9 +19,33 @@ function App() {
       <QueryClientProvider client={client}>
         <ConnectWallet />
         <TotalSupply />
+        <TotalBalance />
       </QueryClientProvider>
     </WagmiProvider>
   );
+}
+
+function TotalBalance() {
+  const { address } = useAccount();
+  const { data, isLoading, error } = useReadContract({
+    address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    abi: [
+      {
+        constant: true,
+        inputs: [{ name: "who", type: "address" }],
+        name: "balanceOf",
+        outputs: [{ name: "", type: "uint256" }],
+        payable: false,
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    functionName: "balanceOf",
+    args: [address?.toString() as Address],
+  });
+  if (isLoading) return <div>Loading balance...</div>;
+  if (error) return <div>Error fetching balance</div>;
+  return <div>Your USDT Balance is: {data?.toString()}</div>;
 }
 
 function TotalSupply() {
