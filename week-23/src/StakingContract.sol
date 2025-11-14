@@ -39,14 +39,16 @@ contract StakingContract {
     function getRewards(address _address) public view returns (uint256) {
         uint256 currentReward = unclaimedRewards[_address];
         uint256 updateTime = lastUpdateTime[_address];
-        uint256 newReward = (block.timestamp - updateTime) * balances[address];
+        uint256 newReward = (block.timestamp - updateTime) *
+            balances[msg.sender];
         return currentReward + newReward;
     }
 
     function claimRewards() public {
         uint256 currentReward = unclaimedRewards[msg.sender];
         uint256 updateTime = lastUpdateTime[msg.sender];
-        uint256 newReward = (block.timestamp - updateTime) * balances[address];
+        uint256 newReward = (block.timestamp - updateTime) *
+            balances[msg.sender];
 
         // transfer currentReward + newReward unclaimedRewards [msg.sender ORCA tokens]
 
